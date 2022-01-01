@@ -1,4 +1,5 @@
 import React from 'react';
+import {useState} from 'react';
 import { Link } from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { useEffect } from 'react';
@@ -6,10 +7,11 @@ import { AiFillGoogleCircle } from 'react-icons/ai';
 import { useNavigate, useLocation } from 'react-router';
 import useAuth from '../../Hooks/useAuth';
 
+
 const SignInComponent = () => {
-    const handleGoogleLogin = () => {
-        signInUsingGoogle().then((result) => { navigate(redirect_uri); })
-    }
+
+    const [loginData, setLoginData] = useState({});
+    
     const {
         user,
         handleNameChange,
@@ -17,9 +19,29 @@ const SignInComponent = () => {
         handlePasswordChange,
         handleForm,
         error,
-        signInUsingGoogle
+        signInUsingGoogle,
+        loginUser,
+        loading
     } = useAuth();
 
+    const handleOnChange = e => {
+        const field = e.target.name;
+        const value = e.target.value;
+        const newLoginData = { ...loginData };
+        newLoginData[field] = value;
+        setLoginData(newLoginData);
+        e.preventDefault();
+    }
+    const handleLoginSubmit = e => {
+        loginUser(loginData.email, loginData.password, location, navigate);
+        e.preventDefault();
+    }
+
+    const handleGoogleLogin = () => {
+        signInUsingGoogle().then((result) => { navigate(redirect_uri); })
+    }
+
+    
     const location = useLocation();
     const navigate = useNavigate();
     const redirect_uri = location.state?.from || '/home';
@@ -40,7 +62,7 @@ const SignInComponent = () => {
                         />
                         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
                     </div>
-                    <form className="mt-8 space-y-6" action="#" method="POST">
+                    <form className="mt-8 space-y-6" action="#" onSubmit={handleLoginSubmit}>
                         <input type="hidden" name="remember" defaultValue="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div>
@@ -52,6 +74,7 @@ const SignInComponent = () => {
                                     name="email"
                                     type="email"
                                     autoComplete="email"
+                                    onChange={handleOnChange}
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Email address"
@@ -65,6 +88,7 @@ const SignInComponent = () => {
                                     id="password"
                                     name="password"
                                     type="password"
+                                    onChange={handleOnChange}
                                     autoComplete="current-password"
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
