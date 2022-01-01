@@ -1,10 +1,8 @@
 import React from 'react';
-
+import ProfileSection from '../../Components/ProfileSection/ProfileSection'
 const Profile = () => {
     return (
-        <div>
-
-        </div>
+        <ProfileSection></ProfileSection>
     );
 };
 

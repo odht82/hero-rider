@@ -21,47 +21,41 @@ import ReviewsTwoToneIcon from '@mui/icons-material/ReviewsTwoTone';
 import RateReviewTwoToneIcon from '@mui/icons-material/RateReviewTwoTone';
 import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';
 import {
-    Switch,
     Route,
-    useRouteMatch,
+    useMatch,
     NavLink,
     Link,
-    useHistory
+    useNavigate,
+    Routes
 } from "react-router-dom";
 import DashboardHome from '../DashboardHome/DashboardHome';
-import MakeAdmin from '../MakeAdmin/MakeAdmin';
-import AddProduct from '../AddProduct/AddProduct';
-import useAuth from './../../../../hooks/useAuth';
-import AdminRoute from './../../Login/AdminRoute/AdminRoute';
-import ManageOrders from '../ManageOrders/ManageOrders';
+import ManageUsers from '../ManageUsers/ManageUsers';
+import useAuth from '../../../Hooks/useAuth';
+import AdminRoute from './../../SignIn/AdminRoute/AdminRoute';
 import Button from '@restart/ui/esm/Button';
-import Reviews from '../Reviews/Reviews';
-import GiveReview from '../GiveReview/GiveReview';
-import ManageProducts from '../ManageProducts/ManageProducts';
 import { FaSprayCan } from 'react-icons/fa';
 import LocalAtmTwoToneIcon from '@mui/icons-material/LocalAtmTwoTone';
-import PayBill from '../PayBill/PayBill';
 
 const drawerWidth = 248;
 
 function Dashboard(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    let { path, url } = useRouteMatch();
+    let { path, url } = useMatch();
     const { admin, logout } = useAuth();
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handlelogout = () => {
-        logout(history)
+        logout(navigate)
     }
 
     const drawer = (
         <div>
             <Toolbar><Link style={{ color: '#020202', listStyle: 'none', textDecoration: 'none', fontWeight: '700', fontSize: '16px', }} to='/' className='navbar-logo'>
-                <p style={{ color: '#020202', textDecoration: 'none', fontWeight: '700', fontSize: '16px', }}><FaSprayCan style={{ marginRight: '10px' }} /> Fragrance Shop.</p>
+                <p style={{ color: '#020202', textDecoration: 'none', fontWeight: '700', fontSize: '16px', }}><FaSprayCan style={{ marginRight: '10px' }} /> Hero Rider.</p>
             </Link></Toolbar>
             <Divider />
             <List>
@@ -71,24 +65,7 @@ function Dashboard(props) {
                     </ListItemIcon>
                     <ListItemText primary="Dashboard" />
                 </ListItem></NavLink>
-                {admin && <NavLink style={{ color: 'black', textDecoration: 'none', fontWeight: 'bold' }} to={`${url}/manage-orders`}><ListItem button >
-                    <ListItemIcon>
-                        <BorderAllTwoToneIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Manage orders" />
-                </ListItem></NavLink>}
-                {admin && <NavLink style={{ color: 'black', textDecoration: 'none', fontWeight: 'bold' }} to={`${url}/add-product`}><ListItem button >
-                    <ListItemIcon>
-                        <DashboardCustomizeTwoToneIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Add Product" />
-                </ListItem></NavLink>}
-                {admin && <NavLink style={{ color: 'black', textDecoration: 'none', fontWeight: 'bold' }} to={`${url}/manage-products`}><ListItem button >
-                    <ListItemIcon>
-                        <StoreMallDirectoryTwoToneIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Manage Product" />
-                </ListItem></NavLink>}
+
                 {admin &&
                     <NavLink style={{ color: 'black', textDecoration: 'none', fontWeight: 'bold' }} to={`${url}/manage-user`}><ListItem button >
                         <ListItemIcon>
@@ -97,28 +74,6 @@ function Dashboard(props) {
                         <ListItemText primary="Manage user" />
                     </ListItem>
                     </NavLink>}
-                {admin &&
-                    <NavLink style={{ color: 'black', textDecoration: 'none', fontWeight: 'bold' }} to={`${url}/reviews`}><ListItem button >
-                        <ListItemIcon>
-                            <ReviewsTwoToneIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="All Reviews" />
-                    </ListItem>
-                    </NavLink>}
-                <NavLink style={{ color: 'black', textDecoration: 'none', fontWeight: 'bold' }} to={`${url}/give-review`}><ListItem button >
-                    <ListItemIcon>
-                        <RateReviewTwoToneIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Give Review" />
-                </ListItem>
-                </NavLink>
-                <NavLink style={{ color: 'black', textDecoration: 'none', fontWeight: 'bold' }} to={`${url}/pay-bill`}><ListItem button >
-                    <ListItemIcon>
-                        <LocalAtmTwoToneIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Pay Bill" />
-                </ListItem>
-                </NavLink>
             </List >
         </div >
     );
@@ -197,32 +152,14 @@ function Dashboard(props) {
             >
                 <Toolbar />
 
-                <Switch>
+                <Routes>
                     <Route exact path={path}>
                         <DashboardHome></DashboardHome>
                     </Route>
-                    <Route exact path={`${path}/give-review`}>
-                        <GiveReview></GiveReview>
-                    </Route>
-                    <Route exact path={`${path}/pay-bill`}>
-                        <PayBill></PayBill>
-                    </Route>
-                    <AdminRoute path={`${path}/reviews`}>
-                        <Reviews></Reviews>
-                    </AdminRoute>
                     <AdminRoute path={`${path}/manage-user`}>
-                        <MakeAdmin></MakeAdmin>
+                        <ManageUsers></ManageUsers>
                     </AdminRoute>
-                    <AdminRoute path={`${path}/manage-orders`}>
-                        <ManageOrders></ManageOrders>
-                    </AdminRoute>
-                    <AdminRoute path={`${path}/add-product`}>
-                        <AddProduct></AddProduct>
-                    </AdminRoute>
-                    <AdminRoute path={`${path}/manage-products`}>
-                        <ManageProducts></ManageProducts>
-                    </AdminRoute>
-                </Switch>
+                </Routes>
 
             </Box>
         </Box>

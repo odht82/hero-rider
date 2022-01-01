@@ -23,13 +23,13 @@ import Home from "./Pages/Home/Home";
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 import Checkout from "./Pages/Checkout/Checkout";
-import Dashboard from "./Pages/Dashboard/Dashboard";
+import Dashboard from "./Pages/Dashboard/Dashboard/Dashboard";
 import Map from "./Pages/Map/Map";
 import Pricing from "./Pages/Pricing/Pricing";
 import Profile from "./Pages/Profile/Profile";
 import SignIn from "./Pages/SignIn/SignIn";
 import SignUp from "./Pages/SignUp/SignUp";
-import NotFound from "./Components/NotFound/NotFound";
+import NotFound from "./Pages/NotFound/NotFound";
 
 function App() {
   return (
@@ -41,9 +41,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/pricing" element={<PrivateRoute><Pricing /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-          <Route path="/pricing/package" element={<PrivateRoute><Checkout /></PrivateRoute>} />
+          <Route path="/pricing/checkout/:vehicle" element={<PrivateRoute><Checkout /></PrivateRoute>} />
           <Route path="/map" element={<PrivateRoute><Map /></PrivateRoute>} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="*" element={<NotFound />} />

@@ -1,10 +1,8 @@
 import React from 'react';
-
+import CheckoutSection from '../../Components/CheckoutSection/CheckoutSection'
 const Checkout = () => {
     return (
-        <div>
-
-        </div>
+        <CheckoutSection></CheckoutSection>
     );
 };
 

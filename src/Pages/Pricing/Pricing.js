@@ -1,10 +1,11 @@
 import React from 'react';
+import PriceSection from '../../Components/PricingSection/PriceSection'
 
 const Pricing = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <PriceSection></PriceSection>
+        </>
     );
 };
 

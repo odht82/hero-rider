@@ -2,7 +2,7 @@ import { Alert, TableRow, TableBody, TableCell, TableHead, TableContainer, Table
 import LoadingButton from '@mui/lab/LoadingButton';
 import AddModeratorTwoToneIcon from '@mui/icons-material/AddModeratorTwoTone';
 import React, { useEffect, useState } from 'react';
-import useAuth from './../../../../hooks/useAuth';
+import useAuth from '../../../Hooks/useAuth';
 
 const MakeAdmin = () => {
     const { user, token } = useAuth();

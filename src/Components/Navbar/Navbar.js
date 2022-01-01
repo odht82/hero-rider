@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Popover, Transition } from '@headlessui/react'
@@ -47,8 +46,19 @@ export default function Example() {
                                 <NavLink to="/map" className="text-base font-medium text-gray-500 hover:text-gray-900">
                                     Map
                                 </NavLink>
-                                <NavLink to="/payment" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                                    Payment
+                            </>
+                        }
+                        {user.email &&
+                            <>
+                                <NavLink to="/dashboard" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                    Dashboard
+                                </NavLink>
+                            </>
+                        }
+                        {user.email &&
+                            <>
+                                <NavLink to="/profile" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                    Profile
                                 </NavLink>
                             </>
                         }
