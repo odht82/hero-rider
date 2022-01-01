@@ -4,7 +4,7 @@ import AddModeratorTwoToneIcon from '@mui/icons-material/AddModeratorTwoTone';
 import React, { useEffect, useState } from 'react';
 import useAuth from '../../../Hooks/useAuth';
 
-const MakeAdmin = () => {
+const ManageUsers = () => {
     const { user, token } = useAuth();
     const [email, setEmail] = useState('');
     const [successadmin, setSuccessadmin] = useState(false);
@@ -26,7 +26,7 @@ const MakeAdmin = () => {
     }
 
     useEffect(() => {
-        const url = `https://fragrance-shop.herokuapp.com/users`
+        const url = `https://herorider.herokuapp.com/users`
         fetch(url, {
             headers: {
                 'authorization': `Bearer ${token}`
@@ -40,7 +40,7 @@ const MakeAdmin = () => {
         const proceed = window.confirm(`Are you sure, to Make Admin this ${email} ?`);
         if (proceed) {
             const user = { email };
-            fetch('https://fragrance-shop.herokuapp.com/users/admin', {
+            fetch('https://herorider.herokuapp.com/users/admin', {
                 method: 'PUT',
                 headers: {
                     'authorization': `Bearer ${token}`,
@@ -65,7 +65,7 @@ const MakeAdmin = () => {
         const proceed = window.confirm(`Are you sure, to Make Demotion this ${email} to member ?`);
         if (proceed) {
             const user = { email };
-            fetch(`https://fragrance-shop.herokuapp.com/users/member`, {
+            fetch(`https://herorider.herokuapp.com/users/member`, {
                 method: 'PUT',
                 headers: {
                     'authorization': `Bearer ${token}`,
@@ -165,4 +165,4 @@ const MakeAdmin = () => {
     );
 };
 
-export default MakeAdmin;
+export default ManageUsers;
