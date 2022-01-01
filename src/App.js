@@ -39,10 +39,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/pricing/package/:productId" element={<PrivateRoute><Checkout /></PrivateRoute>} />
-          <Route path="/map" element={<Map />} />
+          <Route path="/pricing" element={<PrivateRoute><Pricing /></PrivateRoute>} />
+          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="/pricing/package" element={<PrivateRoute><Checkout /></PrivateRoute>} />
+          <Route path="/map" element={<PrivateRoute><Map /></PrivateRoute>} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />

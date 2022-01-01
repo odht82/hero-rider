@@ -1,7 +1,33 @@
 import React from 'react';
-import { LockClosedIcon } from '@heroicons/react/solid'
+import { Link } from 'react-router-dom';
+import { LockClosedIcon } from '@heroicons/react/solid';
+import { useEffect } from 'react';
+import { AiFillGoogleCircle } from 'react-icons/ai';
+import { useNavigate, useLocation } from 'react-router';
+import useAuth from '../../Hooks/useAuth';
 
 const SignInComponent = () => {
+    const handleGoogleLogin = () => {
+        signInUsingGoogle().then((result) => { navigate(redirect_uri); })
+    }
+    const {
+        user,
+        handleNameChange,
+        handleEmailChange,
+        handlePasswordChange,
+        handleForm,
+        error,
+        signInUsingGoogle
+    } = useAuth();
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const redirect_uri = location.state?.from || '/home';
+    useEffect(() => {
+        if (user.email) {
+            navigate(redirect_uri);
+        }
+    }, [navigate, redirect_uri, user.email]);
     return (
         <>
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -77,6 +103,21 @@ const SignInComponent = () => {
                                 </span>
                                 Sign in
                             </button>
+                        </div>
+                        <div className='input-area-btn'>
+                            <button onClick={handleGoogleLogin} className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                <span className="absolute left-0 inset-y-0 flex items-center pl-3"><AiFillGoogleCircle className="h-5 w-5 text-white group-hover:text-white" aria-hidden="true" />
+                                </span>
+                                Sign in With Google
+                            </button>
+                        </div>
+                        <div>
+                            <Link style={{ textDecoration: "none" }} to='/sign-up'>
+                                <button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-white hover:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                                >Don't have Account?
+                                </button>
+                            </Link>
                         </div>
                     </form>
                 </div>

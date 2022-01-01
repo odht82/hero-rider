@@ -1,9 +1,10 @@
 import React from 'react';
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { useEffect } from 'react';
-import { AiFillGoogleCircle, AiOutlineGithub } from 'react-icons/ai';
-import { useHistory, useLocation } from 'react-router';
-import useAuth from '../../../hooks/useAuth';
+import { Link } from 'react-router-dom';
+import { AiFillGoogleCircle } from 'react-icons/ai';
+import { useNavigate, useLocation } from 'react-router';
+import useAuth from '../../Hooks/useAuth';
 
 const SignUpComponent = () => {
     const {
@@ -14,23 +15,30 @@ const SignUpComponent = () => {
         handleForm,
         error,
         signInUsingGoogle,
-        signInUsingGithub
+        handlePhoneChange,
+        handleCountryChange,
+        handleAgeChange,
+        handleAddressChange,
+        handleCityNameChange,
+        handleStateNameChange,
+        handleZipChange
+        
     } = useAuth();
     const location = useLocation();
-    const history = useHistory();
-    const redirect_uri = location.state?.from || '/sign-up';
+    const navigate = useNavigate();
+    const redirect_uri = location.state?.from || '/profile';
 
     const handleGoogleLogin = () => {
-        signInUsingGoogle().then((result) => { history.push(redirect_uri); })
+        signInUsingGoogle().then((result) => { navigate(redirect_uri); })
     }
-    const handleGithubLogin = () => {
-        signInUsingGithub().then((response) => { history.push(redirect_uri); })
-    }
+    // const handleGithubLogin = () => {
+    //     signInUsingGithub().then((response) => { navigate(redirect_uri); })
+    // }
     useEffect(() => {
         if (user.email) {
-            history.push(redirect_uri);
+            navigate(redirect_uri);
         }
-    }, [history, redirect_uri, user.email]);
+    }, [navigate, redirect_uri, user.email]);
     return (
         <>
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -41,7 +49,7 @@ const SignUpComponent = () => {
                             src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                             alt="Workflow"
                         />
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign Up</h2>
                     </div>
                     <div className="mt-5 md:mt-0 md:col-span-2">
                         <form onSubmit={handleForm}>
@@ -49,10 +57,11 @@ const SignUpComponent = () => {
                                 <div className="px-4 py-5 bg-white sm:p-6">
                                     <div className="grid grid-cols-6 gap-6">
                                         <div className="col-span-6 sm:col-span-6">
-                                            <label onBlur={handleNameChange} htmlFor="full-name" className="block text-sm font-medium text-gray-700">
+                                            <label htmlFor="full-name" className="block text-sm font-medium text-gray-700">
                                                 Full name
                                             </label>
                                             <input
+                                                onBlur={handleNameChange}
                                                 type="text"
                                                 name="full-name"
                                                 id="full-name"
@@ -62,10 +71,11 @@ const SignUpComponent = () => {
                                         </div>
 
                                         <div className="col-span-6 sm:col-span-6">
-                                            <label onBlur={handleEmailChange} htmlFor="email-address" className="block text-sm font-medium text-gray-700">
+                                            <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
                                                 Email address
                                             </label>
                                             <input
+                                                onBlur={handleEmailChange}
                                                 type="text"
                                                 name="email-address"
                                                 id="email-address"
@@ -79,6 +89,7 @@ const SignUpComponent = () => {
                                                 Phone
                                             </label>
                                             <input
+                                                onBlur={handlePhoneChange}
                                                 type="text"
                                                 name="phone"
                                                 id="phone"
@@ -92,6 +103,7 @@ const SignUpComponent = () => {
                                                 Country
                                             </label>
                                             <select
+                                                onSelect={handleCountryChange}
                                                 id="country"
                                                 name="country"
                                                 autoComplete="country-name"
@@ -114,6 +126,7 @@ const SignUpComponent = () => {
                                                 Age
                                             </label>
                                             <input
+                                                onBlur={handleAgeChange}
                                                 type="number"
                                                 name="age"
                                                 id="age"
@@ -127,6 +140,7 @@ const SignUpComponent = () => {
                                                 Street address
                                             </label>
                                             <input
+                                                onBlur={handleAddressChange}
                                                 type="text"
                                                 name="street-address"
                                                 id="street-address"
@@ -140,6 +154,7 @@ const SignUpComponent = () => {
                                                 City
                                             </label>
                                             <input
+                                                onBlur={handleCityNameChange}
                                                 type="text"
                                                 name="city"
                                                 id="city"
@@ -153,6 +168,7 @@ const SignUpComponent = () => {
                                                 State / Province
                                             </label>
                                             <input
+                                                onBlur={handleStateNameChange}
                                                 type="text"
                                                 name="region"
                                                 id="region"
@@ -166,6 +182,7 @@ const SignUpComponent = () => {
                                                 ZIP / Postal code
                                             </label>
                                             <input
+                                                onBlur={handleZipChange}
                                                 type="text"
                                                 name="postal-code"
                                                 id="postal-code"
@@ -175,10 +192,11 @@ const SignUpComponent = () => {
                                         </div>
 
                                         <div className="col-span-6 sm:col-span-6">
-                                            <label onBlur={handleEmailChange} htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                                             Password
                                             </label>
                                             <input
+                                                onBlur={handlePasswordChange}
                                                 type="password"
                                                 name="password"
                                                 id="password"
@@ -188,7 +206,7 @@ const SignUpComponent = () => {
                                         </div>
                                         
                                         <div className="col-span-6 sm:col-span-6">
-                                            <label onBlur={handleEmailChange} htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
+                                            <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
                                                 Confirm password
                                             </label>
                                             <input
@@ -213,8 +231,23 @@ const SignUpComponent = () => {
                                         Sign up
                                     </button>
                                 </div>
+                                <div className="px-4 py-4 bg-gray-50 text-right sm:px-6">
+                                    <Link style={{ textDecoration: "none" }} to='/sign-in'>
+                                    <button
+                                        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-white hover:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                                    >Already have Account?
+                                    </button>
+                                    </Link>
+                                </div>
                             </div>
                         </form>
+                    </div>
+                    <div className='input-area-btn'>
+                        <button onClick={handleGoogleLogin} className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            <span className="absolute left-0 inset-y-0 flex items-center pl-3"><AiFillGoogleCircle className="h-5 w-5 text-white group-hover:text-white" aria-hidden="true" />
+                            </span>
+                            Sign Up With Google
+                        </button>
                     </div>
                 </div>
             </div >

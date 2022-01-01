@@ -5,10 +5,14 @@ import { Popover, Transition } from '@headlessui/react'
 import {
     MenuIcon,
     XIcon,
-} from '@heroicons/react/outline'
-import user from '../../Hooks/useFirebase'
+} from '@heroicons/react/outline';
+import useAuth from '../../Hooks/useAuth';
 
 export default function Example() {
+    const {
+        user,
+        logOut
+    } = useAuth();
     return (
         <Popover className="relative bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -39,28 +43,40 @@ export default function Example() {
                             Pricing
                         </NavLink>
                         {user.email &&
-                            (
-                                (<NavLink to="/map" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                            <>
+                                <NavLink to="/map" className="text-base font-medium text-gray-500 hover:text-gray-900">
                                     Map
-                                </NavLink>)(<NavLink to="/payment" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                </NavLink>
+                                <NavLink to="/payment" className="text-base font-medium text-gray-500 hover:text-gray-900">
                                     Payment
-                                </NavLink>)
-                            )
+                                </NavLink>
+                            </>
                         }
 
 
                     </Popover.Group>
-                    <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                        <NavLink to="/sign-in" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                            Sign in
-                        </NavLink>
-                        <NavLink
-                            to="/sign-up"
-                            className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                        >
-                            Sign up
-                        </NavLink>
-                    </div>
+                    {!user.email ? (
+                        <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+                            <NavLink to="/sign-in" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                                Sign in
+                            </NavLink>
+                            <NavLink
+                                to="/sign-up"
+                                className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                            >
+                                Sign up
+                            </NavLink>
+                        </div>
+                    ) : (
+                        <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+                            <button
+                                onClick={logOut}
+                                className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                            >
+                                Sign out
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
 

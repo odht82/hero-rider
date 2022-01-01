@@ -7,11 +7,19 @@ initializeAuthentication();
 const useFirebase = () => {
     const [name, setName] = useState('');
     const [user, setUser] = useState({});
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLogin, setIsLogin] = useState(false);
+
+    // const [handlePhoneChange, setHandlePhoneChange] = useState('');
+    // const [handleCountryChange, setHandleCountryChange] = useState('');
+    // const [handleAgeChange, setHandleAgeChange] = useState('');
+    // const [handleAddressChange, setHandleAddressChange] = useState('');
+    // const [handleCityNameChange, setHandleCityNameChange] = useState('');
+    // const [handleStateNameChange, setHandleStateNameChange] = useState('');
+    // const [handleZipChange, setHandleZipChange] = useState('');
 
     const auth = getAuth()
     const googleProvider = new GoogleAuthProvider();
